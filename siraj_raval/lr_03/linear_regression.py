@@ -58,9 +58,11 @@ x_values.columns = [0]
 y_values.columns = [0]
 
 clf = LinearRegression(0.00001, 100)
+print("Total error before: ", clf.get_total_error(x_values, y_values))
 clf.fit(x_values, y_values)
+print("Total error after: ", clf.get_total_error(x_values, y_values))
 
-# plt.scatter(x_values, y_values)
-# plt.plot(x_values, clf.predict(x_values))
-# plt.show()
+plt.scatter(x_values, y_values)
+plt.plot(x_values, clf.predict(x_values))
+plt.show()
 
