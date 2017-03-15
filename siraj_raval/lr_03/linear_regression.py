@@ -20,36 +20,27 @@ class LinearRegression:
         return error / len(y_values.ix[:, 0])
 
     def step_gradient(self, x_values, y_values):
-        print()
-        print("Values before: m =", self.m, " b =", self.b)
-
         m_gradient = 0
         b_gradient = 0
         N = float(len(x_values.ix[:, 0]))
-
-        print('%11s' % "d(m)", '%11s' % "m_gradient", '%11s' % "d(b)", '%11s' % "b_gradient")
 
         for i in range(int(N)):
             x = x_values.iloc[i][0]
             y = y_values.iloc[i][0]
 
-            pm = (y - self.get_y(x)) * x
+            pm = (y - self.get_y(x)) * x * -1
             pb = (y - self.get_y(x)) * -1
 
             m_gradient += pm * 2 / N
             b_gradient += pb * 2 / N
 
-            print('%11s' % pm, '%11s' % m_gradient, '%11s' % pb, '%11s' % b_gradient)
-
         self.m -= self.learning_rate * m_gradient
         self.b -= self.learning_rate * b_gradient
-
-        print("Values after: m =", self.m, " b =", self.b)
-        print()
 
     def fit(self, x_values, y_values):
         for i in range(self.iterations):
             self.step_gradient(x_values, y_values)
+            print('%3s' % i, ": m = ", '%16s' % self.m, " b =", '%16s' % self.b)
         return
 
     def predict(self, x_values):
@@ -66,7 +57,7 @@ y_values = dataframe[[1]]
 x_values.columns = [0]
 y_values.columns = [0]
 
-clf = LinearRegression(0.0001, 1)
+clf = LinearRegression(0.00001, 100)
 clf.fit(x_values, y_values)
 
 # plt.scatter(x_values, y_values)
